@@ -3,7 +3,8 @@ TOOLPREFIX = riscv64-unknown-elf
 
 KERNEL_ELF = main.elf
 CC = $(TOOLPREFIX)-gcc
-CFLAGS += -march=rv64gc
+# 保证 abi 是 lp64
+CFLAGS += -march=rv64gc -mabi=lp64
 
 OBJS = \
 	$(K)/main.o \

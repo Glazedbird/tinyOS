@@ -3,6 +3,7 @@
 
 _start:
     la sp, stack_top
+    j main 
 
 hang:
     j hang
