@@ -1,16 +1,24 @@
+K = kernel
+TOOLPREFIX = riscv64-unknown-elf
+
 KERNEL_ELF = main.elf
+CC = $(TOOLPREFIX)-gcc
+CFLAGS += -march=rv64gc
 
 OBJS = \
-	main.o \
-	start.o 
+	$(K)/main.o \
+	$(K)/start.o 
 
-$(KERNEL_ELF): $(OBJS)
-	riscv64-unknown-elf-gcc -T linker.ld -o main.elf $(OBJS) -nostdlib -ffreestanding
+$(KERNEL_ELF) : $(OBJS)
+	$(CC) -T linker.ld -o main.elf $(OBJS) -nostdlib -ffreestanding
 
-main.o:
-	riscv64-unknown-elf-gcc -c main.S -o main.o
-start.o:
-	riscv64-unknown-elf-gcc -c start.S -o start.o
+$(K)/%.o : $(K)/%.S
+	$(CC) -c -o $@ $<
+
+# main.o:
+# 	riscv64-unknown-elf-gcc -c main.S -o main.o
+# start.o:
+# 	riscv64-unknown-elf-gcc -c start.S -o start.o
 
 run:$(KERNEL_ELF)
 	qemu-system-riscv64 \
