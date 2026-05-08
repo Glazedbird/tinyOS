@@ -7,10 +7,12 @@ DUMP = $(TOOLPREFIX)-objdump
 # 保证 abi 是 lp64
 CFLAGS += -march=rv64gc -mabi=lp64
 CFLAGS += -mcmodel=medany
+CFLAGS += -g
 
 OBJS = \
 	$(K)/main.o \
-	$(K)/start.o 
+	$(K)/start.o \
+	$(K)/uart.o
 
 $(KERNEL_ELF) : $(OBJS)
 	$(CC) -T linker.ld -o main.elf $(OBJS) -nostdlib -ffreestanding
@@ -47,4 +49,4 @@ dump:$(KERNEL_ELF)
 	$(DUMP) -d $(KERNEL_ELF) > main.asm
 
 clean:
-	rm -f */*.o
+	rm -f */*.o *.elf main.asm

@@ -3,3 +3,4 @@ standard
 
 *.o
 *.elf
+main.asm
