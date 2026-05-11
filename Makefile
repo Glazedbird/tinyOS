@@ -12,7 +12,9 @@ CFLAGS += -g
 OBJS = \
 	$(K)/main.o \
 	$(K)/start.o \
-	$(K)/uart.o
+	$(K)/uart.o \
+	$(K)/yield.o \
+	$(K)/context.o
 
 $(KERNEL_ELF) : $(OBJS)
 	$(CC) -T linker.ld -o main.elf $(OBJS) -nostdlib -ffreestanding
